@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
@@ -34,7 +33,8 @@ public class Main {
 		try {
 			texto = introducirArchivo();
 			fuente = new Fuente(texto);
-			fuente.run();
+			int n = escogerSplit();
+			fuente.run(n);
 			opciones();
 			System.out.println(finPrograma());
 		} catch (IOException e) {
@@ -83,6 +83,27 @@ public class Main {
 		
 		texto = contenido.substring(contenido.indexOf("\"") + 1, contenido.lastIndexOf("\""));
 		return texto;
+	}
+	
+	/**
+	 * Metodo que nos permite elegir el split que le haremos al texto
+	 * @return Numero de caracteres que tendrá el simbolo
+	 */
+	private static int escogerSplit() {
+		System.out.println("ESCOGE LA LONGITUD DE LOS SÍMBOLOS: \n");
+		String l = in.nextLine();
+		boolean b = false;
+		while(!b) {
+			try {
+	            Integer.parseInt(l);
+	            b = true;
+	        } catch (NumberFormatException excepcion) {
+	            System.out.println("INTRODUCE UN NUMERO, POR FAVOR: \n");
+	            l = in.nextLine();
+	        }
+		}
+		
+		return Integer.valueOf(l);
 	}
 	
 	/**

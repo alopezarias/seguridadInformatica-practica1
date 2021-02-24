@@ -1,4 +1,3 @@
-
 /**
  * Clase Simbolo que hace de nodo para el arrayList de simbolos. Contiene el simbolo en sí además
  * de la frecuencia de aparición en el texto de la fuente.
@@ -10,7 +9,7 @@ public class Simbolo implements Comparable<Simbolo>{
 	/**
 	 * Simbolo en cuestión
 	 */
-	private char simbolo;
+	private String simbolo;
 	
 	/**
 	 * Frecuencia del símbolo
@@ -22,7 +21,7 @@ public class Simbolo implements Comparable<Simbolo>{
 	 * @param c Simbolo
 	 * @param n Frecuencia
 	 */
-	public Simbolo(char c, int n) {
+	public Simbolo(String c, int n) {
 		this.simbolo = c;
 		this.numero = n;
 	}
@@ -31,7 +30,7 @@ public class Simbolo implements Comparable<Simbolo>{
 	 * Seteador del símbolo
 	 * @param c Simbolo
 	 */
-	public void setSimbolo(char c) {
+	public void setSimbolo(String c) {
 		this.simbolo = c;
 	}
 	 /**
@@ -45,7 +44,7 @@ public class Simbolo implements Comparable<Simbolo>{
 	 * Obtiene el símbolo en cuestión
 	 * @return Simbolo
 	 */
-	public char getSimbolo() {
+	public String getSimbolo() {
 		return this.simbolo;
 	}
 	
@@ -64,7 +63,7 @@ public class Simbolo implements Comparable<Simbolo>{
 	 */
 	public boolean compareSimbolo( Simbolo s) {
 		
-		return this.simbolo == s.getSimbolo();
+		return this.simbolo.equals(s.getSimbolo());
 	}
 	
 	/**

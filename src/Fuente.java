@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
 
@@ -33,9 +32,10 @@ public class Fuente {
 	/**
 	 * Metodo que incia el calculo de parametros de la fuente
 	 */
-	public void run() {
-		this.simbolSplit(this.texto);
+	public void run(int simTam) {
+		this.simbolSplit(this.texto, simTam);
 	}
+	
 	
 	/**
 	 * Metodo que separa los simbolos de uno en uno y los almacena en espacios
@@ -43,51 +43,103 @@ public class Fuente {
 	 * de los mismos.
 	 * @param text Texto origen de la fuente
 	 */
-	private void simbolSplit(String text) {
+	private void simbolSplit(String text, int n) {
 		
 		Simbolo s;
 		int indice;
 		char c;
+		StringBuffer finalText = new StringBuffer("");
 		
 		for(int i=0; i<text.length(); i++) {
-			
 			c = text.charAt(i);
+			if(c == '\n')
+				finalText.append("  ");
+			else
+				finalText.append(c);
+		}
+		
+		this.texto = finalText.toString();
+		finalText = new StringBuffer("");
+		
+		for(int i=1; i<=texto.length(); i++) {
 			
-			if(c == '\n') {
-				c = Character.valueOf(' ');
-				indice = this.buscar(c);
-				
-				if(indice != -1) {
-					s = this.simbolos.get(indice);
-					s.addNum();
-					s.addNum();
-				}else {
-					s = new Simbolo(c, 1);
-					this.simbolos.add(s);
-				}
-				
-			}else {
-				indice = this.buscar(c);
-				
-				if(indice != -1) {
-					s = this.simbolos.get(indice);
-					s.addNum();
-				}else {
-					s = new Simbolo(c, 1);
-					this.simbolos.add(s);
-				}
+			finalText.append(texto.charAt(i-1));
+			if(i!=0 && i%n == 0 && i!=texto.length()) {
+				finalText.append("-");
 			}
 			
+		}
+		
+		this.texto = finalText.toString();
+		finalText = new StringBuffer("");
+		
+		String[] simbDif = this.texto.split("-");
+		
+		for(String simb : simbDif) {
+			
+			indice = this.buscar(simb);
+			
+			if(indice != -1) {
+				s = this.simbolos.get(indice);
+				s.addNum();
+			}else {
+				s = new Simbolo(simb, 1);
+				this.simbolos.add(s);
+			}
 		}
 	}
 	
 	/**
+	 * Metodo que separa los simbolos de n en n y los almacena en espacios
+	 * diferentes para cada simbolo distinto, alamcenando tambien la frecuencia
+	 * de los mismos.
+	 * @param text Texto origen de la fuente
+	 */
+//	private void simbolSplit(String text, int n) {
+//		
+//		Simbolo s;
+//		int indice;
+//		String c;
+//		
+//		for(int i=0; i<text.length(); i++) {
+//			
+//			c = text.charAt(i);
+//			
+//			if(c == '\n') {
+//				c = Character.valueOf(' ');
+//				indice = this.buscar(c);
+//				
+//				if(indice != -1) {
+//					s = this.simbolos.get(indice);
+//					s.addNum();
+//					s.addNum();
+//				}else {
+//					s = new Simbolo(c, 1);
+//					this.simbolos.add(s);
+//				}
+//				
+//			}else {
+//				indice = this.buscar(c);
+//				
+//				if(indice != -1) {
+//					s = this.simbolos.get(indice);
+//					s.addNum();
+//				}else {
+//					s = new Simbolo(c, 1);
+//					this.simbolos.add(s);
+//				}
+//			}
+//			
+//		}
+//	}
+	
+	/**
 	 * Metodo que nos permite buscar el indice de un simbolo almacenado
 	 * en el array list de todos los simbolos
-	 * @param c Caracter que queremos buscar
+	 * @param c Simbolo que queremos buscar
 	 * @return Indice dentro del arraylist
 	 */
-	private int buscar(char c) {
+	private int buscar(String c) {
 		
 		Simbolo s = new Simbolo(c,0);
 		
@@ -185,9 +237,10 @@ public class Fuente {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("INTRODUCE SÍMBOLO:\n");
 			s = sc.nextLine();
+			sc.close();
 		}
 		
-		int i = buscar(s.charAt(0));
+		int i = buscar(s);
 		if (i != -1) {
 			Simbolo sb = this.simbolos.get(i);
 			System.out.println("SÍMBOLO: " + sb.getSimbolo() + " --> FRECUENCIA: " + sb.getNumero() + "\n\n");
@@ -213,9 +266,10 @@ public class Fuente {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("INTRODUCE SÍMBOLO:\n");
 			s = sc.nextLine();
+			sc.close();
 		}
 		
-		int i = buscar(s.charAt(0));
+		int i = buscar(s);
 		Simbolo sb = this.simbolos.get(i);
 		if (i != -1) {
 			double prob = probSimb(sb);
