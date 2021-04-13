@@ -161,7 +161,7 @@ public class Fuente {
 		
 		cad.append("\n");
 		cad.append("--------------------------\n");
-		cad.append("-  OPCIONES DE PROGRAMA  -");
+		cad.append("-  OPCIONES DE FUENTE    -");
 		cad.append("\n");
 		cad.append("--------------------------\n");
 		cad.append("\n");
